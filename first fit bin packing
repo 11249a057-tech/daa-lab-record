@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+#define MAX 100
+
+int main() {
+    int items[MAX], bins[MAX];
+    int n, capacity;
+
+    printf("Enter number of items: ");
+    scanf("%d", &n);
+
+    printf("Enter item sizes:\n");
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &items[i]);
+    }
+
+    printf("Enter bin capacity: ");
+    scanf("%d", &capacity);
+
+    int binCount = 0;
+
+    // Initialize bins
+    for(int i = 0; i < MAX; i++)
+        bins[i] = 0;
+
+    for(int i = 0; i < n; i++) {
+        int placed = 0;
+
+        for(int j = 0; j < binCount; j++) {
+            if(bins[j] + items[i] <= capacity) {
+                bins[j] += items[i];
+                placed = 1;
+                break;
+            }
+        }
+
+        if(!placed) {
+            bins[binCount] = items[i];
+            binCount++;
+        }
+    }
+
+    printf("Number of bins used = %d\n", binCount);
+
+    return 0;
+}
