@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define N 4
+
+int cost[N][N] = {
+    {0, 10, 15, 20},
+    {10, 0, 35, 25},
+    {15, 35, 0, 30},
+    {20, 25, 30, 0}
+};
+
+int visited[N];
+
+int minCost = INT_MAX;
+
+void tsp(int city, int count, int costSoFar, int start) {
+    if (count == N && cost[city][start] > 0) {
+        int totalCost = costSoFar + cost[city][start];
+
+        if (totalCost < minCost)
+            minCost = totalCost;
+
+        return;
+    }
+
+    for (int i = 0; i < N; i++) {
+        if (!visited[i] && cost[city][i] > 0) {
+            visited[i] = 1;
+            tsp(i, count + 1, costSoFar + cost[city][i], start);
+            visited[i] = 0; // backtrack
+        }
+    }
+}
+
+int main() {
+    int start = 0;
+
+    for (int i = 0; i < N; i++)
+        visited[i] = 0;
+
+    visited[start] = 1;
+
+    tsp(start, 1, 0, start);
+
+    printf("Minimum cost of TSP = %d\n", minCost);
+
+    return 0;
+}
