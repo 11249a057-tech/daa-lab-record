@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+// Structure for item
+struct Item {
+    int value, weight;
+    float ratio;
+};
+
+// Function to sort items by ratio (descending)
+void sort(struct Item items[], int n) {
+    for(int i = 0; i < n - 1; i++) {
+        for(int j = i + 1; j < n; j++) {
+            if(items[i].ratio < items[j].ratio) {
+                struct Item temp = items[i];
+                items[i] = items[j];
+                items[j] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, W;
+
+    printf("Enter number of items: ");
+    scanf("%d", &n);
+
+    struct Item items[n];
+
+    printf("Enter value and weight:\n");
+    for(int i = 0; i < n; i++) {
+        scanf("%d %d", &items[i].value, &items[i].weight);
+        items[i].ratio = (float)items[i].value / items[i].weight;
+    }
+
+    printf("Enter knapsack capacity: ");
+    scanf("%d", &W);
+
+    sort(items, n);
+
+    float totalValue = 0.0;
+
+    for(int i = 0; i < n; i++) {
+        if(W >= items[i].weight) {
+            totalValue += items[i].value;
+            W -= items[i].weight;
+        } else {
+            totalValue += items[i].ratio * W;
+            break;
+        }
+    }
+
+    printf("Maximum value = %.2f\n", totalValue);
+
+    return 0;
+}
