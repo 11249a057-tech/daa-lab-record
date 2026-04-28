@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+// Iterative approach (efficient)
+int fibIterative(int n) {
+    int a = 0, b = 1, c;
+
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+
+    for(int i = 2; i <= n; i++) {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+
+    return b;
+}
+
+// Recursive approach (simple but slow)
+int fibRecursive(int n) {
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+
+    return fibRecursive(n - 1) + fibRecursive(n - 2);
+}
+
+int main() {
+    int n;
+
+    printf("Enter n: ");
+    scanf("%d", &n);
+
+    printf("Iterative Fibonacci = %d\n", fibIterative(n));
+    printf("Recursive Fibonacci = %d\n", fibRecursive(n));
+
+    return 0;
+}
