@@ -1,0 +1,73 @@
+#include <stdio.h>
+
+// Iterative Binary Search
+int binarySearchIterative(int arr[], int n, int key) {
+    int low = 0, high = n - 1;
+    int steps = 0;
+
+    while (low <= high) {
+        steps++;
+        int mid = (low + high) / 2;
+
+        if (arr[mid] == key) {
+            printf("\n[Iterative] Element found at index %d", mid);
+            printf("\n[Iterative] Steps: %d\n", steps);
+            return mid;
+        }
+        else if (arr[mid] < key)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    printf("\n[Iterative] Element not found");
+    printf("\n[Iterative] Steps: %d\n", steps);
+    return -1;
+}
+
+// Recursive Binary Search
+int binarySearchRecursive(int arr[], int low, int high, int key, int steps) {
+    if (low > high) {
+        printf("\n[Recursive] Element not found");
+        printf("\n[Recursive] Steps: %d\n", steps);
+        return -1;
+    }
+
+    steps++;
+    int mid = (low + high) / 2;
+
+    if (arr[mid] == key) {
+        printf("\n[Recursive] Element found at index %d", mid);
+        printf("\n[Recursive] Steps: %d\n", steps);
+        return mid;
+    }
+    else if (arr[mid] < key)
+        return binarySearchRecursive(arr, mid + 1, high, key, steps);
+    else
+        return binarySearchRecursive(arr, low, mid - 1, key, steps);
+}
+
+int main() {
+    int n, key;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Enter sorted elements:\n");
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+
+    // Call Iterative Version
+    binarySearchIterative(arr, n, key);
+
+    // Call Recursive Version
+    binarySearchRecursive(arr, 0, n - 1, key, 0);
+
+    return 0;
+}
