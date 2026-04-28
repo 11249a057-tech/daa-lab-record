@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+// Iterative Factorial
+long long iterativeFactorial(int n) {
+    long long fact = 1;
+    int steps = 0;
+
+    for(int i = 1; i <= n; i++) {
+        fact *= i;
+        steps++;
+    }
+
+    printf("Iterative Steps: %d\n", steps);
+    return fact;
+}
+
+// Recursive Factorial
+long long recursiveFactorial(int n, int *steps) {
+    (*steps)++;
+
+    if(n == 0 || n == 1)
+        return 1;
+
+    return n * recursiveFactorial(n - 1, steps);
+}
+
+int main() {
+    int n, steps = 0;
+
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    long long iter = iterativeFactorial(n);
+    long long rec = recursiveFactorial(n, &steps);
+
+    printf("Iterative Factorial: %lld\n", iter);
+    printf("Recursive Factorial: %lld\n", rec);
+    printf("Recursive Steps: %d\n", steps);
+
+    return 0;
+}
